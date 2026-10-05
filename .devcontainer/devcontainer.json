@@ -1,0 +1,38 @@
+{
+    // Mainly copied from: https://github.com/eddelbuettel/r2u/blob/master/.devcontainer/devcontainer.json 
+    "name": "R Package Dev",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".."
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "REditorSupport.r",
+                "rdebugger.r-debugger",
+                "posit.air-vscode",
+                "reditorsupport.r-syntax",
+                "ms-vscode.live-server"
+            ],
+            "settings": {
+                "r.lsp.debug": true,
+                "r.lsp.args": [
+                    "--vanilla"
+                ],
+                "r.alwaysUseActiveTerminal": true,
+                "r.sessionWatcher": true,
+                "r.executablePath": "/usr/local/bin/R",
+                "r.consolePath": "/root/.cargo/bin/arf",
+                "r.plot.backend": "httpgd",
+                "r.bracketedPaste": true,
+                "[r]": {
+                    "editor.tabSize": 2, 
+                    "editor.insertSpaces": true,
+                    "editor.formatOnSave": true
+                },
+                "r.lsp.diagnostics": true
+            }
+        },
+        "remoteUser": "root"
+    }
+}

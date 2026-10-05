@@ -1,0 +1,67 @@
+.any_is_null            Check if there are any nulls in a list of
+                        objects
+.as_bits                Helper for visualizing the raw bit form of a
+                        byte vector
+.change_byte            Change the leading byte of a hash digest by one
+                        bit
+.cli_progress_output    Write a temporary msg to stdout that will be
+                        removed upon progressbar completion
+.concatenate_hashes     Convert and concatenate two values into a
+                        single raw bytes objec
+.delete_json            Delete a file if it is a JSON file type
+.delete_json_in_dir     Delete every JSON file in a directory
+.dt_to_ms               Convert from a lubridate-style datetime to a
+                        NIST 'milliseconds since epoch' representation
+.get_beacon_defaults    Get the options that need to be set for a
+                        specific Beacon to work
+.get_beacon_json        Read the JSON file specifying default settings
+                        values for a specific Beacon
+.get_option             Get the value of a 'beacr'-specific global
+                        option
+.hex_str_to_raw         Convert from a hexadecimal character string to
+                        a sequence of raw hex bytes
+.is_integer_like        Check if a value can be represented as an
+                        integer without loss
+.ms_to_dt               Convert from NIST 'milliseconds-since-epoch' to
+                        a workable datetime via lubridate
+.posix_to_NIST_UNIX     Convert from R's POSIXct data type to the time
+                        encoding used by the NISTBeacon, namely
+                        *milliseconds* since epoch
+.preregistration_exists
+                        Verify if any preregistration information was
+                        provided Currently used in get_seed and
+                        verify_log
+.printt                 Print out NIST UNIX timestamps (milliseconds
+                        since epoch) in a readable way
+.prompt_menu            Thin wrapper around 'menu' to allow mocking in
+                        tests as mocking 'menu' is unsupported'
+.sanitize_url           Sanitize preregistration identifier strings and
+                        parse for OSF file IDs
+.seed_log_exists        Check for seed log in directory
+.set_option             Set the value of a 'beacr'-specific global
+                        option
+.setup_logging          Set up logger for the package
+.timeStamp_to_unix_time
+                        Converts a string return value from an API that
+                        represents a timestamp into a timestamp integer
+                        in the format expected by the NISTBeacon;
+                        namely, milliseconds since epoch
+.to_raw                 Dispatcher for conversion to atomic raw byte
+                        vector type
+BeaconInterface         Public interface for implementing a new
+                        'beacr'-compatible Beacon object from a R6
+                        class.
+NISTBeacon              NIST Interoperable Randomness Beacon Interface
+get_seed                Get a new fresh seed from the latest pulse sent
+                        by a Beacon of choice.
+read_logs               Read the debug log
+reset_seed_log          Remove stale seed logs to allow acquiring and
+                        logging a new random value
+swirl                   Mix together the output of multiple randomness
+                        beacons to produce a random number robust to
+                        protocol deviations from any one beacon
+verify_log              Verify the contents of a seed log are
+                        internally consistent
+where_is_seed_log       Find where the information needed to verify the
+                        seeds acquired by 'get_seed' is being written
+                        to by default
