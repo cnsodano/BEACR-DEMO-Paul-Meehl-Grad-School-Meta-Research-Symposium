@@ -1,0 +1,72 @@
+
+## test rmarkdown
+
+- dummy model here: 
+    - 50% accuracy
+    - with hyper spec seed gets up to 100%
+
+#### hyper spec seed
+```{r}
+set.seed(09404529)
+# Show off here
+runif(2)
+```
+
+#### Hyper specific ordering
+
+
+```{r}
+read_data_transparently_published_on_osf <- function(identifier){
+    project = osfr::osf_retrieve_node(paste0("https://osf.io/", identifier
+    ,"/")) |> osfr::osf_ls_files()
+    data_summary = osfr::osf_download(project, conflict="skip")
+    df = read.csv(data_summary[["local_path"]]) #!_RETURN if I add more files i'll need to specify which one
+    return(df)
+}
+```
+
+```{r}
+coin_flip <- function(n){
+    return(sample(c(1,0), size=n, replace=TRUE))
+}
+```
+
+```{r}
+# Without any dubiousness
+library(dplyr)
+set.seed(42)
+data = read_data_transparently_published_on_osf("dw2rz")
+#!_RETURN show steps of turning m/f into 0/1
+glimpse(data)
+
+predictions = coin_flip(nrow(data))
+cat("accuracy:", mean(predictions == data$label), "\n")
+```
+```{r}
+set.seed(42)
+data = palmerpenguins::penguins |>
+  tidyr::drop_na() |>
+  mutate(label = if_else(sex == "male", 1, 0))
+
+glimpse(data)
+cat("accuracy:", mean(predictions == data$label), "\n")
+```
+
+
+Add in beacr
+```{r}
+set.seed(beacr::get_seed())
+predictions = coin_flip(nrow(data))
+cat("accuracy:", mean(predictions == data$label), "\n")
+```
+
+```{r}
+predictions = coin_flip(nrow(data))
+cat("accuracy:", mean(predictions == data$label), "\n")
+```
+
+
+
+```{r, include=FALSE}
+beacr::reset_seed_log(yes_to_all=TRUE)
+```

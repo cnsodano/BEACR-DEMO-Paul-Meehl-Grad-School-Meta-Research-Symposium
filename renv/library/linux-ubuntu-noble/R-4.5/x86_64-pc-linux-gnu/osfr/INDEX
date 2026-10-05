@@ -1,0 +1,16 @@
+as_id                   Extract OSF identifiers
+osf_auth                Authenticate osfr with a personal access token
+osf_cp                  Copy a file or directory
+osf_create              Create a new project or component on OSF
+osf_download            Download files and directories from OSF
+osf_ls_files            List files and directories on OSF
+osf_ls_nodes            List projects or components on OSF
+osf_mkdir               Create directories on OSF
+osf_mv                  Move a file or directory
+osf_open                Open on OSF
+osf_refresh             Refresh an OSF entity
+osf_retrieve            Retrieve an entity from OSF
+osf_rm                  Delete an entity from OSF
+osf_tbl                 OSF Tibbles
+osf_upload              Upload files to OSF
+osfr-package            osfr: R interface to OSF

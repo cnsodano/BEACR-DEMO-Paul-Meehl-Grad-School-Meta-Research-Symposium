@@ -12,7 +12,8 @@
                 "rdebugger.r-debugger",
                 "posit.air-vscode",
                 "reditorsupport.r-syntax",
-                "ms-vscode.live-server"
+                // "ms-vscode.live-server",
+                "ms-azuretools.vscode-containers"
             ],
             "settings": {
                 "r.lsp.debug": true,
@@ -22,6 +23,7 @@
                 "r.alwaysUseActiveTerminal": true,
                 "r.sessionWatcher": true,
                 "r.executablePath": "/usr/local/bin/R",
+                "r.rpath.linux":"/usr/local/bin/R",
                 "r.consolePath": "/root/.cargo/bin/arf",
                 "r.plot.backend": "httpgd",
                 "r.bracketedPaste": true,
