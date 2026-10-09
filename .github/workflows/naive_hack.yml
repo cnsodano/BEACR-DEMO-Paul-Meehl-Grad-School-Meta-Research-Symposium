@@ -1,4 +1,4 @@
-name: Coin Flip with beacr
+name: Naive Hack
 
 on:
   workflow_dispatch:
