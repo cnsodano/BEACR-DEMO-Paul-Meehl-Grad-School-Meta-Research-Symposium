@@ -1,4 +1,4 @@
-## Naive Seed Hacking
+## Environment Hacking
 
 ```{r, echo=FALSE}
 box::use(dplyr[...])

@@ -352,23 +352,12 @@ display: none;
 </div>
 
 
-<div id="naive-seed-hacking" class="section level2">
-<h2>Naive Seed Hacking</h2>
+<div id="order-hacking" class="section level2">
+<h2>Order Hacking</h2>
 <pre class="r"><code>set.seed(42)
 data = read_data_transparently_published_on_osf(&quot;dw2rz&quot;)
-glimpse(data)</code></pre>
-<pre><code>## Rows: 333
-## Columns: 9
-## $ species           &lt;chr&gt; &quot;Adelie&quot;, &quot;Adelie&quot;, &quot;Adelie&quot;, &quot;Adelie&quot;, &quot;Adelie&quot;, &quot;Adelie&quot;, &quot;Adelie&quot;, &quot;Adelie&quot;, &quot;Ade…
-## $ island            &lt;chr&gt; &quot;Torgersen&quot;, &quot;Torgersen&quot;, &quot;Torgersen&quot;, &quot;Torgersen&quot;, &quot;Torgersen&quot;, &quot;Torgersen&quot;, &quot;Torge…
-## $ bill_length_mm    &lt;dbl&gt; 39.1, 39.3, 39.2, 38.6, 39.5, 40.3, 36.7, 38.9, 34.6, 41.1, 42.5, 36.6, 46.0, 38.7, …
-## $ bill_depth_mm     &lt;dbl&gt; 18.7, 20.6, 19.6, 21.2, 17.4, 18.0, 19.3, 17.8, 21.1, 17.6, 20.7, 17.8, 21.5, 19.0, …
-## $ flipper_length_mm &lt;int&gt; 181, 190, 195, 191, 186, 195, 193, 181, 198, 182, 197, 185, 194, 195, 180, 185, 184,…
-## $ body_mass_g       &lt;int&gt; 3750, 3650, 4675, 3800, 3800, 3250, 3450, 3625, 4400, 3200, 4500, 3700, 4200, 3450, …
-## $ sex               &lt;chr&gt; &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;female&quot;, &quot;female&quot;, &quot;female&quot;, &quot;female&quot;, &quot;male&quot;, &quot;fem…
-## $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, …
-## $ label             &lt;int&gt; 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, …</code></pre>
-<pre class="r"><code>predictions = coin_flip(nrow(data))
+
+predictions = coin_flip(nrow(data))
 cat(&quot;Accuracy: &quot;, mean(predictions == data$label), &quot;\n&quot;)</code></pre>
 <pre><code>## Accuracy:  0.975976</code></pre>
 </div>

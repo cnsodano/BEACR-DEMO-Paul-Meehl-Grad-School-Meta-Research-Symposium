@@ -1,4 +1,4 @@
-
+## Using beacr
 ```{r, echo=FALSE}
 box::use(dplyr[...])
 box::use(purrr[...])

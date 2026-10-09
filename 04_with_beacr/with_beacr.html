@@ -352,28 +352,28 @@ display: none;
 </div>
 
 
+<div id="using-beacr" class="section level2">
+<h2>Using beacr</h2>
 <pre class="r"><code>starting_seed = beacr::get_seed()</code></pre>
-<pre><code>## ℹ Did not detect a seed log file. Writing one to
-##   `/workspaces/demo_env/beacr/seed_log.json`</code></pre>
-<pre><code>## ✖ No preregistration identifier passed, using pulse without preregistration. See the
-##   &#39;Preregistration&#39; section in the Getting Started vignette for more details:
-##   `vignette(&#39;beacr&#39;)`</code></pre>
-<pre><code>## ✔ Pulse successfully acquired. Details written to log at /workspaces/demo_env/beacr/seed_log.json</code></pre>
+<pre><code>## ℹ Detected seed log file at path `/workspaces/demo_env/04_with_beacr/beacr/seed_log.json`,
+##   reading from that file (**NOT** generating new seeds). Call `reset_seed_log()` to purge
+##   this file and generate new seeds</code></pre>
+<pre><code>## ℹ Verifying the logged pulse can be recreated...</code></pre>
+<pre><code>## ✔ The beacon pulse logged matches the beacon pulse issued at the logged timestamp</code></pre>
+<pre><code>## ℹ Verifying the chain integrity of the logged pulse...</code></pre>
+<pre><code>## ! When verifying chain integrity of logged pulse, no starting pulse was passed. Starting
+##   chain verification with the latest pulse from its chain</code></pre>
+<pre><code>## ✔ Successfully verified chain integrity of logged pulse!</code></pre>
+<pre><code>## ! Preregistration was not able to be found from the log, preventing verification of
+##   preregistration. See the &#39;Preregistration&#39; section in the Getting Started vignette for more
+##   details:`vignette(&#39;beacr&#39;)`</code></pre>
+<pre><code>## ! Continuing verification assuming no preregistration made.</code></pre>
+<pre><code>## ✔ Random seed logged is consistent with the logged preregistration and logged beacon pulse value...</code></pre>
+<pre><code>## ✔ Successfully verified log! Returning reproducible seed...</code></pre>
 <pre class="r"><code>set.seed(starting_seed)
 data = read_data_transparently_published_on_osf(&quot;dw2rz&quot;)
-glimpse(data)</code></pre>
-<pre><code>## Rows: 333
-## Columns: 9
-## $ species           [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;Adelie&quot;[38;5;246m, [39m&quot;Adelie&quot;[38;5;246m, [39m&quot;Adelie&quot;[38;5;246m, [39m&quot;Adelie&quot;[38;5;246m, [39m&quot;Adelie&quot;[38;5;246m, [39m&quot;Adelie…
-## $ island            [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;Torgersen&quot;[38;5;246m, [39m&quot;Torgersen&quot;[38;5;246m, [39m&quot;Torgersen&quot;[38;5;246m, [39m&quot;Torgersen&quot;[38;5;246m, [39m&quot;Torg…
-## $ bill_length_mm    [3m[38;5;246m&lt;dbl&gt;[39m[23m 39.1[38;5;246m, [39m39.3[38;5;246m, [39m39.2[38;5;246m, [39m38.6[38;5;246m, [39m39.5[38;5;246m, [39m40.3[38;5;246m, [39m36.7[38;5;246m, [39m38.9[38;5;246m, [39m34.6[38;5;246m, [39m41.…
-## $ bill_depth_mm     [3m[38;5;246m&lt;dbl&gt;[39m[23m 18.7[38;5;246m, [39m20.6[38;5;246m, [39m19.6[38;5;246m, [39m21.2[38;5;246m, [39m17.4[38;5;246m, [39m18.0[38;5;246m, [39m19.3[38;5;246m, [39m17.8[38;5;246m, [39m21.1[38;5;246m, [39m17.…
-## $ flipper_length_mm [3m[38;5;246m&lt;int&gt;[39m[23m 181[38;5;246m, [39m190[38;5;246m, [39m195[38;5;246m, [39m191[38;5;246m, [39m186[38;5;246m, [39m195[38;5;246m, [39m193[38;5;246m, [39m181[38;5;246m, [39m198[38;5;246m, [39m182[38;5;246m, [39m197[38;5;246m, [39m18…
-## $ body_mass_g       [3m[38;5;246m&lt;int&gt;[39m[23m 3750[38;5;246m, [39m3650[38;5;246m, [39m4675[38;5;246m, [39m3800[38;5;246m, [39m3800[38;5;246m, [39m3250[38;5;246m, [39m3450[38;5;246m, [39m3625[38;5;246m, [39m4400[38;5;246m, [39m320…
-## $ sex               [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;male&quot;[38;5;246m, [39m&quot;male&quot;[38;5;246m, [39m&quot;male&quot;[38;5;246m, [39m&quot;male&quot;[38;5;246m, [39m&quot;female&quot;[38;5;246m, [39m&quot;female&quot;[38;5;246m, [39m&quot;fema…
-## $ year              [3m[38;5;246m&lt;int&gt;[39m[23m 2007[38;5;246m, [39m2007[38;5;246m, [39m2007[38;5;246m, [39m2007[38;5;246m, [39m2007[38;5;246m, [39m2007[38;5;246m, [39m2007[38;5;246m, [39m2007[38;5;246m, [39m2007[38;5;246m, [39m200…
-## $ label             [3m[38;5;246m&lt;int&gt;[39m[23m 1[38;5;246m, [39m1[38;5;246m, [39m1[38;5;246m, [39m1[38;5;246m, [39m0[38;5;246m, [39m0[38;5;246m, [39m0[38;5;246m, [39m0[38;5;246m, [39m1[38;5;246m, [39m0[38;5;246m, [39m1[38;5;246m, [39m0[38;5;246m, [39m1[38;5;246m, [39m0[38;5;246m, [39m1[38;5;246m, [39m1[38;5;246m, [39m0[38;5;246m, [39m0[38;5;246m, [39m0[38;5;246m, [39m…</code></pre>
-<pre class="r"><code>predictions = coin_flip(nrow(data))
+
+predictions = coin_flip(nrow(data))
 cat(&quot;Accuracy: &quot;, mean(predictions == data$label), &quot;\n&quot;)</code></pre>
 <pre><code>## Accuracy:  0.4624625</code></pre>
 <pre class="r"><code>for (i in 1:5){
@@ -386,6 +386,7 @@ cat(&quot;Accuracy: &quot;, mean(predictions == data$label), &quot;\n&quot;)</co
 ## Accuracy:  0.4834835 
 ## Accuracy:  0.4834835 
 ## Accuracy:  0.4804805</code></pre>
+</div>
 
 
 

@@ -1,4 +1,4 @@
-## Naive Seed Hacking
+## Order Hacking
 
 ```{r, echo=FALSE}
 box::use(dplyr[...])

@@ -352,23 +352,12 @@ display: none;
 </div>
 
 
-<div id="naive-seed-hacking" class="section level2">
-<h2>Naive Seed Hacking</h2>
-<pre class="r"><code>set.seed(NULL)
+<div id="environment-hacking" class="section level2">
+<h2>Environment Hacking</h2>
+<pre class="r"><code>set.seed(Sys.time())
 data = read_data_transparently_published_on_osf(&quot;dw2rz&quot;)
-glimpse(data)</code></pre>
-<pre><code>## Rows: 333
-## Columns: 9
-## $ species           &lt;chr&gt; &quot;Adelie&quot;, &quot;Adelie&quot;, &quot;Adelie&quot;, &quot;Adelie&quot;, &quot;Adelie&quot;, &quot;A…
-## $ island            &lt;chr&gt; &quot;Torgersen&quot;, &quot;Torgersen&quot;, &quot;Torgersen&quot;, &quot;Torgersen&quot;, …
-## $ bill_length_mm    &lt;dbl&gt; 39.1, 39.3, 39.2, 38.6, 39.5, 40.3, 36.7, 38.9, 34.6…
-## $ bill_depth_mm     &lt;dbl&gt; 18.7, 20.6, 19.6, 21.2, 17.4, 18.0, 19.3, 17.8, 21.1…
-## $ flipper_length_mm &lt;int&gt; 181, 190, 195, 191, 186, 195, 193, 181, 198, 182, 19…
-## $ body_mass_g       &lt;int&gt; 3750, 3650, 4675, 3800, 3800, 3250, 3450, 3625, 4400…
-## $ sex               &lt;chr&gt; &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;female&quot;, &quot;female&quot;, …
-## $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007…
-## $ label             &lt;int&gt; 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0…</code></pre>
-<pre class="r"><code>predictions = coin_flip(nrow(data))
+
+predictions = coin_flip(nrow(data))
 cat(&quot;Accuracy: &quot;, mean(predictions == data$label), &quot;\n&quot;)</code></pre>
 <pre><code>## Accuracy:  0.975976</code></pre>
 <pre class="r"><code>starting_seed = Sys.time()
