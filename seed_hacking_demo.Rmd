@@ -20,7 +20,7 @@ read_data_transparently_published_on_osf <- function(identifier){
     project = osfr::osf_retrieve_node(paste0("https://osf.io/", identifier
     ,"/")) |> osfr::osf_ls_files()
     data_summary = osfr::osf_download(project, conflict="skip")
-    df = read.csv(data_summary[["local_path"]]) #!_RETURN if I add more files i'll need to specify which one
+    df = read.csv(data_summary[["local_path"]]) 
     return(df)
 }
 ```
@@ -36,11 +36,10 @@ coin_flip <- function(n){
 library(dplyr)
 set.seed(42)
 data = read_data_transparently_published_on_osf("dw2rz")
-#!_RETURN show steps of turning m/f into 0/1
 glimpse(data)
 
 predictions = coin_flip(nrow(data))
-cat("accuracy:", mean(predictions == data$label), "\n")
+cat("Accuracy: ", mean(predictions == data$label), "\n")
 ```
 ```{r}
 set.seed(42)

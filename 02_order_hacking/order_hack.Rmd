@@ -1,0 +1,31 @@
+## Naive Seed Hacking
+
+```{r, echo=FALSE}
+box::use(dplyr[...])
+box::use(purrr[...])
+box::use(furrr[...])
+box::use(progressr[...])
+box::use(future[...])
+box::use(palmerpenguins[penguins])
+box::use(tidyr[drop_na])
+
+coin_flip <- function(n){
+    return(sample(c(1,0), size=n, replace=TRUE))
+}
+
+read_data_transparently_published_on_osf <- function(identifier){
+    project = osfr::osf_retrieve_node(paste0("https://osf.io/", identifier
+    ,"/")) |> osfr::osf_ls_files()
+    data_summary = osfr::osf_download(project, conflict="skip")
+    df = read.csv(data_summary[["local_path"]]) 
+    return(df)
+}
+```
+```{r}
+set.seed(42)
+data = read_data_transparently_published_on_osf("dw2rz")
+glimpse(data)
+
+predictions = coin_flip(nrow(data))
+cat("Accuracy: ", mean(predictions == data$label), "\n")
+```
