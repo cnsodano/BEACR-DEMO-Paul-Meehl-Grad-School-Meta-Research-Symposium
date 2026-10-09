@@ -23,6 +23,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     libfreetype6-dev \ 
     libcairo2-dev \
     pandoc \
+    libglpk-dev \ 
+    libgit2-dev \
     && rm -rf /var/lib/apt/lists/*
 
 CMD ["/bin/bash"]

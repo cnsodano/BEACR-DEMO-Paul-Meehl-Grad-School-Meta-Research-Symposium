@@ -1,0 +1,5 @@
+
+ ```{r}
+ set.seed(beacr::get_seed())
+ print(sample(c("H","T"), size=10, replace=TRUE))
+```
