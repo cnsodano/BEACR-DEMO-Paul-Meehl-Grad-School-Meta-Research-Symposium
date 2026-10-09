@@ -1,4 +1,4 @@
-name: Run Coin Flip with beacr
+name: Coin Flip with beacr
 
 on:
   workflow_dispatch:
