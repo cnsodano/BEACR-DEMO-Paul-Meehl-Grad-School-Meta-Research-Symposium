@@ -21,7 +21,7 @@ jobs:
       - uses: r-lib/actions/setup-renv@v2
 
       - name: Render
-        run: Rscript -e 'rmarkdown::render("03_order_hacking/order_hack.Rmd")'
+        run: Rscript -e 'rmarkdown::render("02_order_hacking/order_hack.Rmd")'
 
       - name: Commit and Push Results
         run: |
