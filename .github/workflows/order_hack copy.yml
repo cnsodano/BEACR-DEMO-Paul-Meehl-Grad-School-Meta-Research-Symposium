@@ -20,11 +20,8 @@ jobs:
 
       - uses: r-lib/actions/setup-renv@v2
 
-      - name: clean dev seed log
-        run: Rscript -e 'beacr::reset_seed_log(purge_all=TRUE, yes_to_all=TRUE)'
-
       - name: Render
-        run: Rscript -e 'rmarkdown::render("04_with_beacr/with_beacr.Rmd")'
+        run: Rscript -e 'rmarkdown::render("01_naive_seed_hacking/seed_hack.Rmd")'
 
       - name: Commit and Push Results
         run: |
