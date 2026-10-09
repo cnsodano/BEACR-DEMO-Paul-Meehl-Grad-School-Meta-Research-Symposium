@@ -1,45 +1,54 @@
 ## Naive Seed Hacking
 
+```{r, echo=FALSE}
+# box::use(dplyr[...])
+# box::use(purrr[...])
+# box::use(furrr[...])
+# box::use(progressr[...])
+# box::use(future[...])
+# box::use(palmerpenguins[penguins])
+# box::use(tidyr[drop_na])
+
+
+# eval <- function(data_nrow, y) {
+#   model_predictions = sample(c(1, 0), size = data_nrow, replace = TRUE)
+#   return(mean(model_predictions == y))
+# }
+
+# seed_hack <- function(data, max_num_seeds_to_try, seed_start = 0) {
+#   seeds = seed_start:max_num_seeds_to_try
+#   y = data |> pull(label)
+#   is_hackable = map_dbl(
+#     .x = seeds,
+#     .f = function(.x) {
+#       withr::with_seed(.x, {
+#         return(eval(nrow(data), y))
+#       })
+#     },
+#     .progress = TRUE
+#   )
+#   return(is_hackable)
+# }
+
+# ```
+# ```{r}
+# data = palmerpenguins::penguins |>
+#   tidyr::drop_na() |>
+#   mutate(label = if_else(sex == "male", 1, 0)) |>
+#   select(where(is.numeric)) # Only use numeric features for simplicity
+
+# max_num_seeds_tried = 10000000
+# hacked_seeds = seed_hack(max_num_seeds_tried, 0, data = data)
+# seed_chosen = which.max(hacked_seeds)
+
+# glue::glue("The best seed out of {max_num_seeds_tried} was seed={seed_chosen} with a performance of {max(hacked_seeds)} over {nrow(data)} data points")
+```
+
 ```{r}
-box::use(dplyr[...])
-box::use(purrr[...])
-box::use(furrr[...])
-box::use(progressr[...])
-box::use(future[...])
-box::use(palmerpenguins[penguins])
-box::use(tidyr[drop_na])
-
-
-eval <- function(data_nrow, y) {
-  model_predictions = sample(c(1, 0), size = data_nrow, replace = TRUE)
-  return(mean(model_predictions == y))
-}
-
-seed_hack <- function(data, max_num_seeds_to_try, seed_start = 0) {
-  seeds = seed_start:max_num_seeds_to_try
-  y = data |> pull(label)
-  is_hackable = map_dbl(
-    .x = seeds,
-    .f = function(.x) {
-      withr::with_seed(.x, {
-        return(eval(nrow(data), y))
-      })
-    },
-    .progress = TRUE
-  )
-  return(is_hackable)
-}
-set.seed(42)
-
-
-data = palmerpenguins::penguins |>
-  tidyr::drop_na() |>
-  mutate(label = if_else(sex == "male", 1, 0)) |>
-  select(where(is.numeric)) # Only use numeric features for simplicity
-
-max_num_seeds_tried = 10000
-hacked_seeds = seed_hack(max_num_seeds_tried, 0, data = data)
-seed_chosen = which.max(hacked_seeds)
-
-glue::glue("The best seed out of {max_num_seeds_tried} was seed={seed_chosen} with a performance of {max(seed_chosen)} over {nrow(data)} data points")
+set.seed(254903)
+flips = rbinom(50,size=1,prob=0.5)
+print(glue::glue("In 50 flips, the number of heads was {sum(flips)}\nTrial Results:"))
+m = matrix(flips, nrow=5)
+print(m)
+print(glue::glue("Per 'trial', the number of heads was:{\nrowSums(m)}"))
 ```

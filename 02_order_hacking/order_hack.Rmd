@@ -24,7 +24,6 @@ read_data_transparently_published_on_osf <- function(identifier){
 ```{r}
 set.seed(42)
 data = read_data_transparently_published_on_osf("dw2rz")
-glimpse(data)
 
 predictions = coin_flip(nrow(data))
 cat("Accuracy: ", mean(predictions == data$label), "\n")

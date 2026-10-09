@@ -9,9 +9,13 @@ box::use(future[...])
 box::use(palmerpenguins[penguins])
 box::use(tidyr[drop_na])
 
+## This is what's being 'injected' into the environment by Rscript -e "..."
+# set.seed <- function(s){
+#     base::set.seed(42)
+# }
+
 coin_flip <- function(n){
     res = sample(c(1,0), size=n, replace=TRUE)
-    res[1] = sample(c(1,0), size=1)
     return(res)
 }
 
@@ -24,22 +28,31 @@ read_data_transparently_published_on_osf <- function(identifier){
 }
 ```
 
-
 ```{r}
-set.seed(NULL)
+set.seed(Sys.time())
 data = read_data_transparently_published_on_osf("dw2rz")
-glimpse(data)
 
 predictions = coin_flip(nrow(data))
 cat("Accuracy: ", mean(predictions == data$label), "\n")
 ```
 
+```{r, echo=FALSE}
+
+## Change the model slightly so it's not obvious the seed is being forced by the environment
+coin_flip <- function(n){
+    res = sample(c(1,0), size=n, replace=TRUE)
+    res[i] = 0
+    res[i+1]= 0
+    res[i+2]= 0
+    return(res)
+}
+```
+
 ```{r}
 starting_seed = Sys.time()
-for (i in starting_seed:starting_seed+5){
-    withr::with_seed(i, {
-        predictions = coin_flip(nrow(data))
-        cat("Accuracy: ", mean(predictions == data$label), "\n")
-    })
+for (i in 1:5){
+    set.seed(starting_seed+i)
+    predictions = coin_flip(nrow(data))
+    cat("Accuracy: ", mean(predictions == data$label), "\n")
 }
 ```

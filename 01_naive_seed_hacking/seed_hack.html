@@ -354,48 +354,25 @@ display: none;
 
 <div id="naive-seed-hacking" class="section level2">
 <h2>Naive Seed Hacking</h2>
-<pre class="r"><code>box::use(dplyr[...])
-box::use(purrr[...])
-box::use(furrr[...])
-box::use(progressr[...])
-box::use(future[...])
-box::use(palmerpenguins[penguins])
-box::use(tidyr[drop_na])
-
-
-eval &lt;- function(data_nrow, y) {
-  model_predictions = sample(c(1, 0), size = data_nrow, replace = TRUE)
-  return(mean(model_predictions == y))
-}
-
-seed_hack &lt;- function(data, max_num_seeds_to_try, seed_start = 0) {
-  seeds = seed_start:max_num_seeds_to_try
-  y = data |&gt; pull(label)
-  is_hackable = map_dbl(
-    .x = seeds,
-    .f = function(.x) {
-      withr::with_seed(.x, {
-        return(eval(nrow(data), y))
-      })
-    },
-    .progress = TRUE
-  )
-  return(is_hackable)
-}
-set.seed(42)
-
-
-data = palmerpenguins::penguins |&gt;
-  tidyr::drop_na() |&gt;
-  mutate(label = if_else(sex == &quot;male&quot;, 1, 0)) |&gt;
-  select(where(is.numeric)) # Only use numeric features for simplicity
-
-max_num_seeds_tried = 10000
-hacked_seeds = seed_hack(max_num_seeds_tried, 0, data = data)
-seed_chosen = which.max(hacked_seeds)
-
-glue::glue(&quot;The best seed out of {max_num_seeds_tried} was seed={seed_chosen} with a performance of {max(seed_chosen)} over {nrow(data)} data points&quot;)</code></pre>
-<pre><code>## The best seed out of 10000 was seed=7779 with a performance of 7779 over 333 data points</code></pre>
+<pre class="r"><code>set.seed(254903)
+flips = rbinom(50,size=1,prob=0.5)
+print(glue::glue(&quot;In 50 flips, the number of heads was {sum(flips)}\nTrial Results:&quot;))</code></pre>
+<pre><code>## In 50 flips, the number of heads was 40
+## Trial Results:</code></pre>
+<pre class="r"><code>m = matrix(flips, nrow=5)
+print(m)</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+## [1,]    1    0    1    1    1    1    1    0    1     1
+## [2,]    1    0    1    0    1    1    1    1    1     1
+## [3,]    0    1    1    1    1    1    0    1    1     1
+## [4,]    1    1    1    0    1    0    1    1    1     1
+## [5,]    0    0    1    1    1    1    1    1    1     1</code></pre>
+<pre class="r"><code>print(glue::glue(&quot;Per &#39;trial&#39;, the number of heads was:{\nrowSums(m)}&quot;))</code></pre>
+<pre><code>## Per &#39;trial&#39;, the number of heads was:8
+## Per &#39;trial&#39;, the number of heads was:8
+## Per &#39;trial&#39;, the number of heads was:8
+## Per &#39;trial&#39;, the number of heads was:8
+## Per &#39;trial&#39;, the number of heads was:8</code></pre>
 </div>
 
 

@@ -1,5 +1,45 @@
 
- ```{r}
- set.seed(beacr::get_seed())
- print(sample(c("H","T"), size=10, replace=TRUE))
+```{r, echo=FALSE}
+box::use(dplyr[...])
+box::use(purrr[...])
+box::use(furrr[...])
+box::use(progressr[...])
+box::use(future[...])
+box::use(palmerpenguins[penguins])
+box::use(tidyr[drop_na])
+
+
+coin_flip <- function(n){
+    res = sample(c(1,0), size=n, replace=TRUE)
+    return(res)
+}
+
+read_data_transparently_published_on_osf <- function(identifier){
+    project = osfr::osf_retrieve_node(paste0("https://osf.io/", identifier
+    ,"/")) |> osfr::osf_ls_files()
+    data_summary = osfr::osf_download(project, conflict="skip")
+    df = read.csv(data_summary[["local_path"]]) 
+    return(df)
+}
+```
+
+```{r}
+starting_seed = beacr::get_seed()
+set.seed(starting_seed)
+data = read_data_transparently_published_on_osf("dw2rz")
+
+predictions = coin_flip(nrow(data))
+cat("Accuracy: ", mean(predictions == data$label), "\n")
+```
+
+```{r}
+for (i in 1:5){
+    set.seed(as.integer(starting_seed)+i)
+    predictions = coin_flip(nrow(data))
+    cat("Accuracy: ", mean(predictions == data$label), "\n")
+}
+```
+
+```{r, include=FALSE}
+beacr::reset_seed_log(yes_to_all=TRUE)
 ```

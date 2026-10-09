@@ -11,7 +11,7 @@
 
 
 
-<title>environment_hack.knit</title>
+<title>with_beacr.knit</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -352,37 +352,40 @@ display: none;
 </div>
 
 
-<div id="naive-seed-hacking" class="section level2">
-<h2>Naive Seed Hacking</h2>
-<pre class="r"><code>set.seed(NULL)
+<pre class="r"><code>starting_seed = beacr::get_seed()</code></pre>
+<pre><code>## ℹ Did not detect a seed log file. Writing one to
+##   `/workspaces/demo_env/beacr/seed_log.json`</code></pre>
+<pre><code>## ✖ No preregistration identifier passed, using pulse without preregistration. See the
+##   &#39;Preregistration&#39; section in the Getting Started vignette for more details:
+##   `vignette(&#39;beacr&#39;)`</code></pre>
+<pre><code>## ✔ Pulse successfully acquired. Details written to log at /workspaces/demo_env/beacr/seed_log.json</code></pre>
+<pre class="r"><code>set.seed(starting_seed)
 data = read_data_transparently_published_on_osf(&quot;dw2rz&quot;)
 glimpse(data)</code></pre>
 <pre><code>## Rows: 333
 ## Columns: 9
-## $ species           &lt;chr&gt; &quot;Adelie&quot;, &quot;Adelie&quot;, &quot;Adelie&quot;, &quot;Adelie&quot;, &quot;Adelie&quot;, &quot;A…
-## $ island            &lt;chr&gt; &quot;Torgersen&quot;, &quot;Torgersen&quot;, &quot;Torgersen&quot;, &quot;Torgersen&quot;, …
-## $ bill_length_mm    &lt;dbl&gt; 39.1, 39.3, 39.2, 38.6, 39.5, 40.3, 36.7, 38.9, 34.6…
-## $ bill_depth_mm     &lt;dbl&gt; 18.7, 20.6, 19.6, 21.2, 17.4, 18.0, 19.3, 17.8, 21.1…
-## $ flipper_length_mm &lt;int&gt; 181, 190, 195, 191, 186, 195, 193, 181, 198, 182, 19…
-## $ body_mass_g       &lt;int&gt; 3750, 3650, 4675, 3800, 3800, 3250, 3450, 3625, 4400…
-## $ sex               &lt;chr&gt; &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;female&quot;, &quot;female&quot;, …
-## $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007…
-## $ label             &lt;int&gt; 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0…</code></pre>
+## $ species           [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;Adelie&quot;[38;5;246m, [39m&quot;Adelie&quot;[38;5;246m, [39m&quot;Adelie&quot;[38;5;246m, [39m&quot;Adelie&quot;[38;5;246m, [39m&quot;Adelie&quot;[38;5;246m, [39m&quot;Adelie…
+## $ island            [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;Torgersen&quot;[38;5;246m, [39m&quot;Torgersen&quot;[38;5;246m, [39m&quot;Torgersen&quot;[38;5;246m, [39m&quot;Torgersen&quot;[38;5;246m, [39m&quot;Torg…
+## $ bill_length_mm    [3m[38;5;246m&lt;dbl&gt;[39m[23m 39.1[38;5;246m, [39m39.3[38;5;246m, [39m39.2[38;5;246m, [39m38.6[38;5;246m, [39m39.5[38;5;246m, [39m40.3[38;5;246m, [39m36.7[38;5;246m, [39m38.9[38;5;246m, [39m34.6[38;5;246m, [39m41.…
+## $ bill_depth_mm     [3m[38;5;246m&lt;dbl&gt;[39m[23m 18.7[38;5;246m, [39m20.6[38;5;246m, [39m19.6[38;5;246m, [39m21.2[38;5;246m, [39m17.4[38;5;246m, [39m18.0[38;5;246m, [39m19.3[38;5;246m, [39m17.8[38;5;246m, [39m21.1[38;5;246m, [39m17.…
+## $ flipper_length_mm [3m[38;5;246m&lt;int&gt;[39m[23m 181[38;5;246m, [39m190[38;5;246m, [39m195[38;5;246m, [39m191[38;5;246m, [39m186[38;5;246m, [39m195[38;5;246m, [39m193[38;5;246m, [39m181[38;5;246m, [39m198[38;5;246m, [39m182[38;5;246m, [39m197[38;5;246m, [39m18…
+## $ body_mass_g       [3m[38;5;246m&lt;int&gt;[39m[23m 3750[38;5;246m, [39m3650[38;5;246m, [39m4675[38;5;246m, [39m3800[38;5;246m, [39m3800[38;5;246m, [39m3250[38;5;246m, [39m3450[38;5;246m, [39m3625[38;5;246m, [39m4400[38;5;246m, [39m320…
+## $ sex               [3m[38;5;246m&lt;chr&gt;[39m[23m &quot;male&quot;[38;5;246m, [39m&quot;male&quot;[38;5;246m, [39m&quot;male&quot;[38;5;246m, [39m&quot;male&quot;[38;5;246m, [39m&quot;female&quot;[38;5;246m, [39m&quot;female&quot;[38;5;246m, [39m&quot;fema…
+## $ year              [3m[38;5;246m&lt;int&gt;[39m[23m 2007[38;5;246m, [39m2007[38;5;246m, [39m2007[38;5;246m, [39m2007[38;5;246m, [39m2007[38;5;246m, [39m2007[38;5;246m, [39m2007[38;5;246m, [39m2007[38;5;246m, [39m2007[38;5;246m, [39m200…
+## $ label             [3m[38;5;246m&lt;int&gt;[39m[23m 1[38;5;246m, [39m1[38;5;246m, [39m1[38;5;246m, [39m1[38;5;246m, [39m0[38;5;246m, [39m0[38;5;246m, [39m0[38;5;246m, [39m0[38;5;246m, [39m1[38;5;246m, [39m0[38;5;246m, [39m1[38;5;246m, [39m0[38;5;246m, [39m1[38;5;246m, [39m0[38;5;246m, [39m1[38;5;246m, [39m1[38;5;246m, [39m0[38;5;246m, [39m0[38;5;246m, [39m0[38;5;246m, [39m…</code></pre>
 <pre class="r"><code>predictions = coin_flip(nrow(data))
 cat(&quot;Accuracy: &quot;, mean(predictions == data$label), &quot;\n&quot;)</code></pre>
-<pre><code>## Accuracy:  0.975976</code></pre>
-<pre class="r"><code>starting_seed = Sys.time()
-for (i in 1:5){
-    set.seed(starting_seed+i)
+<pre><code>## Accuracy:  0.4624625</code></pre>
+<pre class="r"><code>for (i in 1:5){
+    set.seed(as.integer(starting_seed)+i)
     predictions = coin_flip(nrow(data))
     cat(&quot;Accuracy: &quot;, mean(predictions == data$label), &quot;\n&quot;)
 }</code></pre>
-<pre><code>## Accuracy:  0.966967 
-## Accuracy:  0.966967 
-## Accuracy:  0.96997 
-## Accuracy:  0.972973 
-## Accuracy:  0.975976</code></pre>
-</div>
+<pre><code>## Accuracy:  0.5195195 
+## Accuracy:  0.5165165 
+## Accuracy:  0.4834835 
+## Accuracy:  0.4834835 
+## Accuracy:  0.4804805</code></pre>
 
 
 
