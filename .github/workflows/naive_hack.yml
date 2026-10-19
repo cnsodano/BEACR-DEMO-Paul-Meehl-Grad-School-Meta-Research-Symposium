@@ -21,7 +21,7 @@ jobs:
       - uses: r-lib/actions/setup-renv@v2
 
       - name: Render
-        run: Rscript -e 'rmarkdown::render("01_naive_seed_hacking/seed_hack.Rmd")'
+        run: Rscript -e 'rmarkdown::render("01_naive_seed_hacking/seed_hack.Rmd", rmarkdown::pdf_document())'
 
       - name: Commit and Push Results
         run: |

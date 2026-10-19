@@ -17,6 +17,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     libgdal-dev \
     libudunits2-dev \
     libx11-dev \
+    wget \ 
+    perl \
     ca-certificates \
     xz-utils \
     libfontconfig1-dev \
@@ -29,6 +31,11 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 
 CMD ["/bin/bash"]
 
+
+# Install TinyTeX so that rmarkdown can render to pdf
+RUN wget -qO- "https://yihui.org/tinytex/install-bin-unix.sh" | sh
+
+# Install arf
 RUN curl --proto '=https' --tlsv1.2 -LsSf https://github.com/eitsupi/arf/releases/latest/download/arf-console-installer.sh | sh
 
 # COPY .bashrc /root/.bashrc
