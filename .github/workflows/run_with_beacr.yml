@@ -20,6 +20,9 @@ jobs:
 
       - uses: r-lib/actions/setup-renv@v2
 
+      - name: Install TinyTeX so that rmarkdown can render to pdf
+        run: wget -qO- "https://yihui.org/tinytex/install-bin-unix.sh" | sh
+
       - name: clean dev seed log
         run: Rscript -e 'beacr::reset_seed_log(purge_all=TRUE, yes_to_all=TRUE)'
 

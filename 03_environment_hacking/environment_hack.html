@@ -354,23 +354,89 @@ display: none;
 
 <div id="environment-hacking" class="section level2">
 <h2>Environment Hacking</h2>
+<p><br></p>
+<p>Here I will demonstrate one possible way of signaling a ‘random’
+random seed, and why it isn’t enough to prevent seed hacking. Let’s try
+using <code>Sys.time()</code>, and let’s be extra generous and assume
+that a disinterested third party decided when to run this code, so that
+the seed produced by <code>Sys.time()</code> could not have been known
+by the author of the code (who wants to hack the results with a specific
+seed). Like the other examples in this repository, let’s even assume
+this code was run automatically and transparently via a GitHub action<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> in a way
+that anyone can audit and verify. Sounds like a pretty foolproof system,
+right? Not quite… <br></p>
 <pre class="r"><code>set.seed(Sys.time())
 data = read_data_transparently_published_on_osf(&quot;dw2rz&quot;)
 
+# &#39;preprocess&#39; the data (really just an excuse to call the poisoned 
+# dplyr::mutate function)
+data = data |&gt; dplyr::mutate(male = if_else(sex==&quot;male&quot;, 1,0))
+
+random_state_after_mutate = .Random.seed  # Saving for later demonstration
+
 predictions = coin_flip(nrow(data))
-cat(&quot;Accuracy: &quot;, mean(predictions == data$label), &quot;\n&quot;)</code></pre>
+
+cat(&quot;Accuracy: &quot;, mean(predictions == data$male), &quot;\n&quot;)</code></pre>
 <pre><code>## Accuracy:  0.975976</code></pre>
-<pre class="r"><code>starting_seed = Sys.time()
-for (i in 1:5){
-    set.seed(starting_seed+i)
-    predictions = coin_flip(nrow(data))
-    cat(&quot;Accuracy: &quot;, mean(predictions == data$label), &quot;\n&quot;)
+<p><br> Despite setting a seed that was supposedly unknowable beforehand
+(<code>Sys.time()</code>), the accuracy of our coin flip model (which
+should be 50% at best) is over 97%! This is because the pre-selected
+seed that performs best (<code>42</code>) was secretly set by
+<code>dplyr::mutate</code>. However, when we look for any altered code
+in <code>dplyr::mutate</code>, we won’t find any. <br></p>
+<pre class="r"><code>dplyr::mutate</code></pre>
+<pre><code>## function (.data, ...) 
+## {
+##     UseMethod(&quot;mutate&quot;)
+## }
+## &lt;bytecode: 0x5aff16944cc8&gt;
+## &lt;environment: namespace:dplyr&gt;</code></pre>
+<p><br> The source code of <code>mutate</code> is pretty underwhelming,
+since it delegates functionality through the <code>UseMethod</code>
+function. If you trace the sequence of function calls that
+<code>mutate</code> kicks off, you’ll eventually find a
+<code>.Call</code> function which calls
+<code>dplyr_mask_eval_all_mutate</code>, which has a signature that
+looks something like this: <br></p>
+<pre class="cpp"><code>// dplyr/src/mutate.cpp  (C++ code) 
+SEXP dplyr_mask_eval_all_mutate(SEXP quo, SEXP env_private) {
+    ...
 }</code></pre>
-<pre><code>## Accuracy:  0.966967 
-## Accuracy:  0.966967 
-## Accuracy:  0.96997 
-## Accuracy:  0.972973 
-## Accuracy:  0.975976</code></pre>
+<p><br> All I did was add some code inside this function that changes
+R’s seed to <code>42</code> (which I will not show here but can easily
+be learned by anyone motivated enough to think about this kind of
+deception to begin with). <br></p>
+<pre class="r"><code># Demonstrating that the random_state saved right after calling dplyr::mutate
+# is the same as when you set.seed(42)
+set.seed(42)
+
+random_state_42 = .Random.seed
+
+print(identical(random_state_after_mutate, random_state_42))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p><br> After the C++ code is compiled, it is very difficult to catch
+this deception, since the source code can be re-edited to appear as if
+nothing was changed. Indeed, this is what I did; you can find the source
+code that I used to install a local, edited version of dplyr in same
+GitHub <a href="https://github.com/cnsodano/BEACR-DEMO-Paul-Meehl-Grad-School-Meta-Research-Symposium">repository</a>
+of this .Rmd file at <code>/dplyr/</code>.</p>
+<p><br></p>
+<p>So what to do?</p>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1">The yaml for this action can be found <a href="https://github.com/cnsodano/BEACR-DEMO-Paul-Meehl-Grad-School-Meta-Research-Symposium/blob/main/.github/workflows/environment_hack.yml">here</a>
+and the history of the action’s runs (including possibly some mistakes I
+made while drafting) can be found <a href="https://github.com/cnsodano/BEACR-DEMO-Paul-Meehl-Grad-School-Meta-Research-Symposium/actions/workflows/environment_hack.yml">here</a>
+<details>
+<summary>
+Or, read it here
+</summary>
+<pre class="yaml"><code>sdjflk</code></pre>
+</details>
+<a href="#fnref1" class="footnote-back">↩︎</a></li>
+</ol>
 </div>
 
 

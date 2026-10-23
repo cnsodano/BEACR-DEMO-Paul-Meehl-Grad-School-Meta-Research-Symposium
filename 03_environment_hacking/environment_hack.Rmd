@@ -1,13 +1,12 @@
 ## Environment Hacking
 
+<br>
+
+Here I will demonstrate one possible way of signaling a 'random' random seed, and why it isn't enough to prevent seed hacking. Let's try using `Sys.time()`, and let's be extra generous and assume that a disinterested third party decided when to run this code, so that the seed produced by `Sys.time()` could not have been known by the author of the code (who wants to hack the results with a specific seed). Like the other examples in this repository, let's even assume this code was run automatically and transparently via a GitHub action[^1] in a way that anyone can audit and verify. Sounds like a pretty foolproof system, right? Not quite...
+<br>
+
 ```{r, echo=FALSE}
 box::use(dplyr[...])
-box::use(purrr[...])
-box::use(furrr[...])
-box::use(progressr[...])
-box::use(future[...])
-box::use(palmerpenguins[penguins])
-box::use(tidyr[drop_na])
 
 ## This is what's being 'injected' into the environment by Rscript -e "..."
 # set.seed <- function(s){
@@ -32,27 +31,61 @@ read_data_transparently_published_on_osf <- function(identifier){
 set.seed(Sys.time())
 data = read_data_transparently_published_on_osf("dw2rz")
 
+# 'preprocess' the data (really just an excuse to call the poisoned 
+# dplyr::mutate function)
+data = data |> dplyr::mutate(male = if_else(sex=="male", 1,0))
+
+random_state_after_mutate = .Random.seed  # Saving for later demonstration
+
 predictions = coin_flip(nrow(data))
-cat("Accuracy: ", mean(predictions == data$label), "\n")
+
+cat("Accuracy: ", mean(predictions == data$male), "\n")
 ```
 
-```{r, echo=FALSE}
 
-## Change the model slightly so it's not obvious the seed is being forced by the environment
-coin_flip <- function(n){
-    res = sample(c(1,0), size=n, replace=TRUE)
-    res[i] = 0
-    res[i+1]= 0
-    res[i+2]= 0
-    return(res)
-}
-```
+<br>
+Despite setting a seed that was supposedly unknowable beforehand (`Sys.time()`), the accuracy of our coin flip model (which should be 50% at best) is over 97%! This is because the pre-selected seed that performs best (`42`) was secretly set by `dplyr::mutate`. However, when we look for any altered code in `dplyr::mutate`, we won't find any. 
+<br>
 
 ```{r}
-starting_seed = Sys.time()
-for (i in 1:5){
-    set.seed(starting_seed+i)
-    predictions = coin_flip(nrow(data))
-    cat("Accuracy: ", mean(predictions == data$label), "\n")
+dplyr::mutate
+```
+<br>
+The source code of `mutate` is pretty underwhelming, since it delegates functionality through the `UseMethod` function. If you trace the sequence of function calls that `mutate` kicks off, you'll eventually find a `.Call` function which calls `dplyr_mask_eval_all_mutate`, which has a signature that looks something like this:
+<br>
+
+```{cpp, eval=FALSE}
+// dplyr/src/mutate.cpp  (C++ code) 
+SEXP dplyr_mask_eval_all_mutate(SEXP quo, SEXP env_private) {
+    ...
 }
 ```
+<br>
+All I did was add some code inside this function that changes R's seed to `42` (which I will not show here but can easily be learned by anyone motivated enough to think about this kind of deception to begin with). 
+<br>
+
+```{r}
+# Demonstrating that the random_state saved right after calling dplyr::mutate
+# is the same as when you set.seed(42)
+set.seed(42)
+
+random_state_42 = .Random.seed
+
+print(identical(random_state_after_mutate, random_state_42))
+```
+
+<br>
+After the C++ code is compiled, it is very difficult to catch this deception, since the source code can be re-edited to appear as if nothing was changed. Indeed, this is what I did; you can find the source code that I used to install a local, edited version of dplyr in same GitHub [repository](https://github.com/cnsodano/BEACR-DEMO-Paul-Meehl-Grad-School-Meta-Research-Symposium) of this .Rmd file at `/dplyr/`.  
+
+<br>
+
+So what to do? 
+
+[^1]: The yaml for this action can be found [here](https://github.com/cnsodano/BEACR-DEMO-Paul-Meehl-Grad-School-Meta-Research-Symposium/blob/main/.github/workflows/environment_hack.yml) and the history of the action's runs (including possibly some mistakes I made while drafting) can be found [here](https://github.com/cnsodano/BEACR-DEMO-Paul-Meehl-Grad-School-Meta-Research-Symposium/actions/workflows/environment_hack.yml)
+    <details>
+    <summary> Or, read it here  </summary>
+    Heads up: this may not be up to date with the repository.
+    ```yaml
+    sdjflk
+    ```
+    </details>

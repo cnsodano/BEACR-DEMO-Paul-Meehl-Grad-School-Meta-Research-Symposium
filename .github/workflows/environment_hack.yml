@@ -20,8 +20,11 @@ jobs:
 
       - uses: r-lib/actions/setup-renv@v2
 
+      - name: Install TinyTeX so that rmarkdown can render to pdf
+        run: wget -qO- "https://yihui.org/tinytex/install-bin-unix.sh" | sh
+
       - name: 
-        run: Rscript -e 'set.seed <- function(s){base::set.seed(42)};set.seed(42);rmarkdown::render("03_environment_hacking/environment_hack.Rmd", rmarkdown::pdf_document())'
+        run: Rscript -e 'rmarkdown::render("03_environment_hacking/environment_hack.Rmd", rmarkdown::pdf_document())'
 
       - name: Commit and Push Results
         run: |

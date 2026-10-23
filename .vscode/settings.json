@@ -10,5 +10,7 @@
         "titleBar.inactiveForeground": "#e7e7e799",
         "window.activeBorder": "#3d435d",
         "window.inactiveBorder": "#3d435d"
-    }
+    },
+    "local-comment.storage.commentsConfig": "comments.json",
+    "local-comment.storage.bookmarksConfig": "bookmarks.json"
 }
