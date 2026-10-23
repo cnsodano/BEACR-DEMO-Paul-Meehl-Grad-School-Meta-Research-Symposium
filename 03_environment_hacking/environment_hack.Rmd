@@ -79,13 +79,6 @@ After the C++ code is compiled, it is very difficult to catch this deception, si
 
 <br>
 
-So what to do? 
+So what to do? Follow along [here](https://github.com/cnsodano/BEACR-DEMO-Paul-Meehl-Grad-School-Meta-Research-Symposium/blob/main/04_with_beacr/with_beacr.pdf) to see how you can use `beacr` along with careful use of GitHub actions to try to eliminate this vulnerability 
 
 [^1]: The yaml for this action can be found [here](https://github.com/cnsodano/BEACR-DEMO-Paul-Meehl-Grad-School-Meta-Research-Symposium/blob/main/.github/workflows/environment_hack.yml) and the history of the action's runs (including possibly some mistakes I made while drafting) can be found [here](https://github.com/cnsodano/BEACR-DEMO-Paul-Meehl-Grad-School-Meta-Research-Symposium/actions/workflows/environment_hack.yml)
-    <details>
-    <summary> Or, read it here  </summary>
-    Heads up: this may not be up to date with the repository.
-    ```yaml
-    sdjflk
-    ```
-    </details>
